@@ -1,0 +1,3 @@
+[workspace]
+members = ["upgrayedd-macros", "upgrayedd"]
+resolver = "2"
