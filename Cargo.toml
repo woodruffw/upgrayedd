@@ -3,6 +3,7 @@ members = ["upgrayedd-macros", "upgrayedd"]
 resolver = "2"
 
 [workspace.metadata.release]
+tag = false                # handled by upgrayedd/Cargo.toml
 publish = false            # handled by GitHub Actions
 push = true
 shared-version = true

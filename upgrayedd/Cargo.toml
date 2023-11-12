@@ -6,3 +6,7 @@ edition = "2021"
 [dependencies]
 libc = "0.2.150"
 upgrayedd-macros = { version = "0.1.0", path = "../upgrayedd-macros" }
+
+[package.metadata.release]
+tag = true
+tag-name = "v{{version}}"
