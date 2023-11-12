@@ -16,11 +16,11 @@ look like (relatively) idiomatic Rust.
 
 Interposing on an OpenSSL API:
 
-```rust
+```rust,no_run
 use upgrayedd::upgrayedd;
 
 #[upgrayedd]
-fn X509_VERIFY_PARAM_set_auth_level(param: *mut c_void, level: c_int) {
+fn X509_VERIFY_PARAM_set_auth_level(param: *mut std::ffi::c_void, level: std::ffi::c_int) {
     eprintln!("before!");
     unsafe { upgrayedd(param, level) };
     eprintln!("after!");
@@ -44,7 +44,7 @@ Stubbing functions out:
 use upgrayedd::upgrayedd;
 
 #[upgrayedd]
-fn verify_cert(cert: *mut c_void) -> libc::c_int {
+fn verify_cert(cert: *mut std::ffi::c_void) -> libc::c_int {
     // nothing to see here
     1
 }
