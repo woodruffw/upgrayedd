@@ -3,5 +3,7 @@ members = ["upgrayedd-macros", "upgrayedd"]
 resolver = "2"
 
 [workspace.metadata.release]
-publish = false # handled by GitHub Actions
+publish = false            # handled by GitHub Actions
 push = true
+shared-version = true
+consolidate-commits = true
