@@ -1,3 +1,7 @@
 [workspace]
 members = ["upgrayedd-macros", "upgrayedd"]
 resolver = "2"
+
+[workspace.metadata.release]
+publish = false # handled by GitHub Actions
+push = true

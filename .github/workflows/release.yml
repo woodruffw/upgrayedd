@@ -1,0 +1,31 @@
+on:
+  push:
+    tags:
+      - 'v*'
+
+name: release
+
+jobs:
+  create-release:
+    name: create GitHub release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: ${{ contains(github.ref, 'pre') || contains(github.ref, 'rc') }}
+
+  publish:
+    needs:
+      - create-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: publish to crates.io
+        run: |
+          echo ${{ secrets.CRATES_IO_TOKEN }} | cargo login
+          cargo publish
