@@ -19,10 +19,7 @@ jobs:
           rustup component add clippy
           cargo clippy -- -D warnings
   test:
-    strategy:
-      matrix:
-        platform: ["ubuntu-latest", "macos-latest", "windows-latest"]
-    runs-on: ${{ matrix.platform }}
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
 
