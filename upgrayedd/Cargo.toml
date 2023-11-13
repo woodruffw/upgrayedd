@@ -9,7 +9,7 @@ license.workspace = true
 
 [dependencies]
 libc = "0.2.150"
-upgrayedd-macros = { version = "0.1.1-rc.1", path = "../upgrayedd-macros" }
+upgrayedd-macros = { version = "0.1.1-rc.2", path = "../upgrayedd-macros" }
 
 [package.metadata.release]
 tag = true
