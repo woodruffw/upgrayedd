@@ -3,7 +3,7 @@ members = ["upgrayedd-macros", "upgrayedd"]
 resolver = "2"
 
 [workspace.package]
-version = "0.1.1-rc.2"
+version = "0.1.1-rc.3"
 edition = "2021"
 authors = ["William Woodruff <william@yossarian.net>"]
 license = "MIT"
