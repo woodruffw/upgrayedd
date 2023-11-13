@@ -2,6 +2,9 @@
 
 [*"Two Ds for a double dose of debugging."*](https://www.youtube.com/watch?v=Gf9i23KPGKk)
 
+[![CI](https://github.com/woodruffw/upgrayedd/actions/workflows/ci.yml/badge.svg)](https://github.com/woodruffw/upgrayedd/actions/workflows/ci.yml)
+[![Crates.io](https://img.shields.io/crates/v/upgrayedd)](https://crates.io/crates/upgrayedd)
+
 > [!WARNING]
 > You do not need this library. Do not use this library, especially in production
 > systems. It is **not safe**, *even if* you only use safe Rust with it.
