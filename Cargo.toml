@@ -2,6 +2,18 @@
 members = ["upgrayedd-macros", "upgrayedd"]
 resolver = "2"
 
+[workspace.package]
+version = "0.1.1-rc.3"
+edition = "2021"
+authors = ["William Woodruff <william@yossarian.net>"]
+license = "MIT"
+repository = "https://github.com/woodruffw/upgrayedd"
+description = "Ergonomic function interposition in Rust"
+readme = "README.md"
+
 [workspace.metadata.release]
-publish = false # handled by GitHub Actions
+tag = false                # handled by upgrayedd/Cargo.toml
+publish = false            # handled by GitHub Actions
 push = true
+shared-version = true
+consolidate-commits = true

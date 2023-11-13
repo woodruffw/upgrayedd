@@ -1,8 +1,17 @@
 [package]
 name = "upgrayedd"
-version = "0.1.0"
-edition = "2021"
+edition.workspace = true
+version.workspace = true
+authors.workspace = true
+description.workspace = true
+repository.workspace = true
+license.workspace = true
+readme.workspace = true
 
 [dependencies]
 libc = "0.2.150"
-upgrayedd-macros = { version = "0.1.0", path = "../upgrayedd-macros" }
+upgrayedd-macros = { version = "0.1.1-rc.3", path = "../upgrayedd-macros" }
+
+[package.metadata.release]
+tag = true
+tag-name = "v{{version}}"
