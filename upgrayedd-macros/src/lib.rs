@@ -9,6 +9,9 @@ use syn::{
     LitByteStr, LitStr,
 };
 
+#[cfg(not(target_os = "linux"))]
+compile_error!("upgrayedd currently only supports Linux; consider sending a patch.");
+
 // Converts a FnArg sequence into a like sequence, but only with identifiers.
 // For example, `foo: u8, bar: u64` becomes just `foo, bar`.
 //
