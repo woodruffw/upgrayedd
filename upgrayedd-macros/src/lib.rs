@@ -100,37 +100,10 @@ pub fn upgrayedd(attr: TokenStream, item: TokenStream) -> TokenStream {
     // This is really the name of the global that holds the function pointer to the target.
     let target = Ident::new(&format!("__upgrayedd_target_{ident}"), ident.span());
 
-    // The Rust-side target constructor ident for the target function, e.g. `_upgrayedd_target_ctor_read`
-    //
-    // This is nested in a few places, but at the top-level is a static function pointer to
-    // a function that, when called (during early program initialization), sets the value
-    // of `__upgrayedd_target_read` to the actual function pointer being targeted for wrapping.
-    // let target_ctor = Ident::new(&format!("__upgrayedd_target_ctor_{ident}"), target.span());
-
     let args = transform_params(inputs.clone());
 
     let gen = quote! {
         static mut #target: Option<unsafe extern "C" fn(#inputs) #output> = None;
-
-        // #[used]
-        // #[allow(non_upper_case_globals)]
-        // #[doc(hidden)]
-        // #[link_section = ".init_array"]
-        // static #target_ctor: unsafe extern "C" fn() -> usize = {
-        //     #[allow(non_snake_case)]
-        //     #[link_section = ".text.startup"]
-        //     unsafe extern "C" fn #target_ctor() -> usize {
-        //         // NOTE: transmuting from a nullable function pointer to `Option<fn _>` is sound, per:
-        //         // https://rust-lang.github.io/unsafe-code-guidelines/layout/function-pointers.html#representation
-        //         #target = std::mem::transmute(::libc::dlsym(
-        //             ::libc::RTLD_NEXT,
-        //             std::mem::transmute(#real_c_name_bytes_nulled.as_ptr()),
-        //         ));
-
-        //         0
-        //     }
-        //     #target_ctor
-        // };
 
         #[no_mangle]
         #[doc(hidden)]
