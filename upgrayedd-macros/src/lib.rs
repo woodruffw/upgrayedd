@@ -103,23 +103,23 @@ pub fn upgrayedd(attr: TokenStream, item: TokenStream) -> TokenStream {
     let args = transform_params(inputs.clone());
 
     let gen = quote! {
-        static mut #target: Option<unsafe extern "C" fn(#inputs) #output> = None;
+        static mut #target: std::sync::atomic::AtomicPtr<unsafe extern "C" fn(#inputs) #output> = std::sync::atomic::AtomicPtr::new(std::ptr::null_mut());
 
         #[no_mangle]
         #[doc(hidden)]
         #[allow(non_snake_case)]
         #[export_name = #real_c_name_lit]
         pub unsafe extern "C" fn #inner_wrapper(#inputs) #output {
-            if #target.is_none() {
-                #target = std::mem::transmute(::libc::dlsym(
-                    ::libc::RTLD_NEXT,
-                    std::mem::transmute(#real_c_name_bytes_nulled.as_ptr()),
-                ));
+            let mut target_ptr = #target.get_mut();
+            if target_ptr.is_null() {
+                *target_ptr = &mut std::mem::transmute(
+                    ::libc::dlsym(::libc::RTLD_NEXT, std::mem::transmute(#real_c_name_bytes_nulled.as_ptr()))
+                );
             }
 
             // This should only happen if, somehow, our wrapper gets called
             // with no underlying target.
-            if #target.is_none() {
+            if target_ptr.is_null() {
                 // NOTE: We can't reliably panic here, since we might be hooking
                 // something like malloc (in which case we'd regress infinitely,
                 // since the panic handler calls malloc).
@@ -138,7 +138,7 @@ pub fn upgrayedd(attr: TokenStream, item: TokenStream) -> TokenStream {
         #[allow(non_snake_case)]
         #(#attrs)* #vis #sig {
             #[allow(unused_variables)]
-            let #inner_var = unsafe { #target.unwrap_unchecked() };
+            let #inner_var = unsafe { *#target.load(std::sync::atomic::Ordering::Relaxed) };
 
             #(#stmts)*
         }
