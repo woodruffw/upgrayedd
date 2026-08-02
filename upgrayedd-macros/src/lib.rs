@@ -42,6 +42,7 @@ pub fn upgrayedd(attr: TokenStream, item: TokenStream) -> TokenStream {
         vis,
         sig,
         block,
+        ..
     } = func;
 
     // This is purely for misuse-resistance reasons: these wrapper functions
@@ -62,7 +63,7 @@ pub fn upgrayedd(attr: TokenStream, item: TokenStream) -> TokenStream {
     let syn::Signature {
         constness: _,
         asyncness: _,
-        unsafety: _,
+        safety: _,
         abi: _,
         fn_token: _,
         ident,
